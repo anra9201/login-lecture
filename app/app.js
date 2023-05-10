@@ -15,8 +15,12 @@
 const express = require('express');
 const app = express();
 
+// set 전연변수 선언
 app.set('views','./src/views');
 app.set('view engine','ejs');
+
+
+app.use(express.static(`${__dirname}/src/public/`));
 
 // use 미들웨어 사용
 const home = require('./src/routes/home');
