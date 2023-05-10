@@ -13,6 +13,7 @@
 // });
 
 const express = require('express');
+const bodyParser = require("body-parser");
 const app = express();
 
 // set 전연변수 선언
@@ -21,7 +22,8 @@ app.set('view engine','ejs');
 
 
 app.use(express.static(`${__dirname}/src/public/`));
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended : true}));
 // use 미들웨어 사용
 const home = require('./src/routes/home');
 
