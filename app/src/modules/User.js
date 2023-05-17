@@ -8,17 +8,24 @@ class User {
     }
 
     login() {
-        const body = this.body;
-        const { userId , userPw } = UserVO.getUserVOInfo(body.id);
+        const clint = this.body;
+        const { userId , userPw } = UserVO.getUserVOInfo(clint.id);
 
         if(userId){
-            if( userId === body.id && userPw === body.password) {
+            if( userId === clint.id && userPw === clint.password) {
                 return { success : true};
             }
             return { success : false , msg : '비밀번호가 틀렸습니다.' };
         }
         return { success : false , msg : '존재하지 않는 아이디 입니다.'};
     }
+
+    save(){
+        const clint = this.body
+        const res = UserVO.setUserVOInfo(clint);
+        return { success : true};
+    }
+
 }
 
 module.exports = User;

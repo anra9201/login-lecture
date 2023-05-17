@@ -38,6 +38,15 @@ class UserVO {
         return userInfo;
     }
     
+    static setUserVOInfo(userInfo) {
+        const setUserInfoArr = this.#user;
+        setUserInfoArr.userId.push(userInfo.id)
+        setUserInfoArr.userNm.push(userInfo.name);
+        setUserInfoArr.userPw.push(userInfo.password);
+        console.log(setUserInfoArr);
+        return { success : true}
+    }
+
 }
 
 module.exports = UserVO;
