@@ -1,6 +1,6 @@
 "use strict";
 
-class userVO {
+class UserVO {
     // 변수명 앞에 #를 추가하면 은닉화 할 수 있음
     static #user = {
         userId : ['아이디1','아이디2','아이디3'],
@@ -22,6 +22,29 @@ class userVO {
 
         return newUserVO;
     }
+
+    static getUserVOInfo(id){
+        const tempUser = this.#user;
+        const tempUserIdArr = tempUser.userId;
+        const idx = tempUserIdArr.indexOf(id);
+        console.log(id);
+        console.log(tempUser);
+        console.log(tempUserIdArr);
+        console.log(idx);
+        const keys = Object.keys(tempUser);
+        console.log(keys);
+        const userInfo = keys.reduce((userInfo,field) => {
+            console.log(userInfo);
+            console.log(field);
+            if(tempUser.hasOwnProperty(field)){
+                userInfo[field] = tempUser[field][idx];
+            }
+            return userInfo;
+        } , {});
+
+        return userInfo;
+    }
+    
 }
 
-module.exports = userVO;
+module.exports = UserVO;
