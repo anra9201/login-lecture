@@ -9,29 +9,28 @@ const output = {
     },
 };
 
-const user = {
-    userId : ['아이디1','아이디2','아이디3'],
-    userPw : ['1234','1234','1245'],
-};
+const user = require('../../modules/UserVO');
+
+console.log(user);
+console.log(user.getUserInfo('userPw'));
+
 
 const process = {
     login : (req,res) => {
         const id = req.body.id;
         const pw = req.body.password;
-
+        let response = {};
         if(user.userId.includes(id)){
             const idx = user.userId.indexOf(id);
             if(user.userPw[idx] === pw){
-                return res.json({
-                    success : true,
-                })
+                response.success = true
+                return res.json(response)
             }
         }
-        
-        return res.json({
-            success : false,
-            msg : "로그인에 실패하였습니다.",
-        });
+ 
+        response.success = false;
+        response.msg = '로그인에 실패하였습니다.';
+        return res.json(response);
     },
 }
 // ket,value 형식에서 value가 key와 명칭이 같으면 key만 입력해도 사용 가능
