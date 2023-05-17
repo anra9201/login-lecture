@@ -9,17 +9,17 @@ const output = {
     },
 };
 
-const user = require('../../modules/UserVO');
-
-console.log(user);
-console.log(user.getUserInfo('userPw'));
-
-
+const UserVO = require('../../modules/UserVO');
+const user = UserVO.getUserInfo('userId','userPw');
 const process = {
     login : (req,res) => {
         const id = req.body.id;
         const pw = req.body.password;
         let response = {};
+        console.log(id);
+        console.log(pw);
+        console.log(user);
+        
         if(user.userId.includes(id)){
             const idx = user.userId.indexOf(id);
             if(user.userPw[idx] === pw){
@@ -27,7 +27,7 @@ const process = {
                 return res.json(response)
             }
         }
- 
+
         response.success = false;
         response.msg = '로그인에 실패하였습니다.';
         return res.json(response);
