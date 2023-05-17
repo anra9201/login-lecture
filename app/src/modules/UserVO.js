@@ -27,15 +27,8 @@ class UserVO {
         const tempUser = this.#user;
         const tempUserIdArr = tempUser.userId;
         const idx = tempUserIdArr.indexOf(id);
-        console.log(id);
-        console.log(tempUser);
-        console.log(tempUserIdArr);
-        console.log(idx);
         const keys = Object.keys(tempUser);
-        console.log(keys);
         const userInfo = keys.reduce((userInfo,field) => {
-            console.log(userInfo);
-            console.log(field);
             if(tempUser.hasOwnProperty(field)){
                 userInfo[field] = tempUser[field][idx];
             }
