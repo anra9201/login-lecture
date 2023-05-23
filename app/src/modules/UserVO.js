@@ -1,6 +1,7 @@
 "use strict";
 
-const fs = require('fs');
+const fs = require('fs').promises;
+// proimses를 추가하면 proimses를 반환 함
 
 
 class UserVO {
@@ -10,7 +11,21 @@ class UserVO {
     //     userPw : ['1234','1234','1245'],
     //     userNm : ['이름1','이름2','이름3']
     // }; 
+    static #getUserVOInfo(data,id){
+        const tempUserIdArr = JSON.parse(data);
+        const idx = tempUserIdArr.userId.indexOf(id);
+        const keys = Object.keys(tempUserIdArr);
+        const userInfo = keys.reduce((userInfo,field) => {
+            if(tempUserIdArr.hasOwnProperty(field)){
+                userInfo[field] = tempUserIdArr[field][idx];
+            }
+            return userInfo;
+        } , {});
 
+        console.log(userInfo);
+
+        return userInfo;
+    }
     // 파라미터를 ... + 변수명 형태로 받으면 전달 받은 파라미터를 배열 형식을 받음
     static getUserInfo(...fields){ 
         // const user = this.#user;
@@ -28,24 +43,14 @@ class UserVO {
 
     static getUserVOInfo(id){
         // const tempUser = this.#user;
-
-        fs.readFile('./src/databases/users.json', (err,data) => {
-            if(err) throw err;
+        return fs.readFile('./src/databases/users.json')
+        .then((data) => {
             // 16진수로 출력하기 때문에 Json.parse 파싱
-            console.log(JSON.parse(data));
-        })
+            console.log(id);
+            return this.#getUserVOInfo(data,id);
 
-        // const tempUserIdArr = tempUser.userId;
-        // const idx = tempUserIdArr.indexOf(id);
-        // const keys = Object.keys(tempUser);
-        // const userInfo = keys.reduce((userInfo,field) => {
-        //     if(tempUser.hasOwnProperty(field)){
-        //         userInfo[field] = tempUser[field][idx];
-        //     }
-        //     return userInfo;
-        // } , {});
+        }).catch((err) => { console.error(err)});
 
-        // return userInfo;
     }
     
     static setUserVOInfo(userInfo) {
