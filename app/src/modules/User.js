@@ -9,15 +9,16 @@ class User {
 
     login() {
         const clint = this.body;
-        const { userId , userPw } = UserVO.getUserVOInfo(clint.id);
+        // const { userId , userPw } = UserVO.getUserVOInfo(clint.id);
+        UserVO.getUserVOInfo(clint.id);
 
-        if(userId){
-            if( userId === clint.id && userPw === clint.password) {
-                return { success : true};
-            }
-            return { success : false , msg : '비밀번호가 틀렸습니다.' };
-        }
-        return { success : false , msg : '존재하지 않는 아이디 입니다.'};
+        // if(userId){
+        //     if( userId === clint.id && userPw === clint.password) {
+        //         return { success : true};
+        //     }
+        //     return { success : false , msg : '비밀번호가 틀렸습니다.' };
+        // }
+        // return { success : false , msg : '존재하지 않는 아이디 입니다.'};
     }
 
     save(){
