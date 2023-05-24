@@ -1,8 +1,8 @@
 "use strict";
 
-const fs = require('fs').promises;
+// const fs = require('fs').promises;
 // proimses를 추가하면 proimses를 반환 함
-
+const db = require('../config/db');
 
 class UserVO {
     // 변수명 앞에 #를 추가하면 은닉화 할 수 있음
@@ -30,12 +30,12 @@ class UserVO {
     }
 
     static #getUserInfo(isAll,...fields){
-        return fs.readFile('./src/databases/users.json')
-        .then((data) => {
-            // 16진수로 출력하기 때문에 Json.parse 파싱
-            return this.#getUserVOInfo(isAll,data,fields);
+        // return fs.readFile('./src/databases/users.json')
+        // .then((data) => {
+        //     // 16진수로 출력하기 때문에 Json.parse 파싱
+        //     return this.#getUserVOInfo(isAll,data,fields);
 
-        }).catch((err) => { console.error(err)});
+        // }).catch((err) => { console.error(err)});
     }
 
     // 파라미터를 ... + 변수명 형태로 받으면 전달 받은 파라미터를 배열 형식을 받음
@@ -54,13 +54,20 @@ class UserVO {
     // }
 
     static getUserVOInfo(id){
+        return new Promise((resolve,reject) =>{
+            db.query('SELECT * FROM USER WHERE USER_ID = ?',[id],(err,data) => {
+                console.log(data[0]);
+                if(err) reject(err);
+                resolve(data[0]);
+            });   
+        }); 
         // const tempUser = this.#user;
-        return fs.readFile('./src/databases/users.json')
-        .then((data) => {
-            // 16진수로 출력하기 때문에 Json.parse 파싱
-            return this.#getUserVOInfo(false,data,id);
+        // return fs.readFile('./src/databases/users.json')
+        // .then((data) => {
+        //     // 16진수로 출력하기 때문에 Json.parse 파싱
+        //     return this.#getUserVOInfo(false,data,id);
 
-        }).catch((err) => { console.error(err)});
+        // }).catch((err) => { console.error(err)});
 
     }
     
@@ -70,18 +77,18 @@ class UserVO {
         // 아이디 검증 
         // 데이터 저장
         // const setUserInfoArr = this.#user;
-        const data = await this.#getUserInfo(true);
+        // const data = await this.#getUserInfo(true);
 
-        if(data.userId.includes(userInfo.id)){
-            throw "아이디가 존재합니다.";
-        }
+        // if(data.userId.includes(userInfo.id)){
+        //     throw "아이디가 존재합니다.";
+        // }
 
-        // const data = await fs.readFile('./src/databases/users.json');
-        // const setUserInfoArr = JSON.parse(data);
-        data.userId.push(userInfo.id)
-        data.userNm.push(userInfo.name);
-        data.userPw.push(userInfo.password)
-        fs.writeFile('./src/databases/users.json',JSON.stringify(data));
+        // // const data = await fs.readFile('./src/databases/users.json');
+        // // const setUserInfoArr = JSON.parse(data);
+        // data.userId.push(userInfo.id)
+        // data.userNm.push(userInfo.name);
+        // data.userPw.push(userInfo.password)
+        // fs.writeFile('./src/databases/users.json',JSON.stringify(data));
         
         return { success : true}
     }

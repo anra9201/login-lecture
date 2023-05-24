@@ -10,8 +10,11 @@ class User {
     async login() {
         const clint = this.body;
         // const { userId , userPw } = UserVO.getUserVOInfo(clint.id);
-        const { userId, userPw } = await UserVO.getUserVOInfo(clint.id);
-
+        const { USER_ID, USER_PW } = await UserVO.getUserVOInfo(clint.id);
+        const userId = USER_ID;
+        const userPw = USER_PW;
+        console.log(userId);
+        console.log(userPw);
         if(userId){
             if( userId === clint.id && userPw === clint.password) {
                 return { success : true};
