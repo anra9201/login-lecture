@@ -33,6 +33,7 @@ const registerFn = () => {
         body : JSON.stringify(req),
     }).then((res) => res.json()
     ).then((res) => {
+      console.log('aaaaa');
       console.log(res);
       if(res.success == true){
         location.href = '/login';

@@ -21,12 +21,17 @@ class User {
         return { success : false , msg : '존재하지 않는 아이디 입니다.'};
     }
 
-    save(){
+    async save(){
         const clint = this.body
-        const res = UserVO.setUserVOInfo(clint);
-        return { success : true};
+        try{
+            const res = await UserVO.setUserVOInfo(clint);
+            console.log(res);
+            return res;
+        }catch(err){
+            console.log(err);
+            return { success : false , msg : err};
+        }
     }
-
 }
 
 module.exports = User;

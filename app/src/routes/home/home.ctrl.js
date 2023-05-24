@@ -20,9 +20,10 @@ const process = {
         const response = await user.login();
         return res.json(response);
     },
-    save : (req,res) => {
+    save : async (req,res) => {
         const user = new User(req.body);
-        const response = user.save();
+        const response = await user.save();
+        console.log(response);
         return res.json(response);
     }
 }
